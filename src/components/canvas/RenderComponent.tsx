@@ -10,6 +10,7 @@ import { Checkbox } from '../ui/Checkbox';
 import { CustomFunction } from '../ui/CustomFunction';
 import { Card } from '../ui/Card';
 import { FilePicker } from '../ui/FilePicker';
+import { Chart } from '../ui/Chart';
 
 interface RenderComponentProps {
   component: ComponentData;
@@ -72,6 +73,9 @@ export const RenderComponent: React.FC<RenderComponentProps> = ({
 
     case 'filepicker':
       return <FilePicker {...componentProps} />;
+
+    case 'chart':
+      return <Chart {...componentProps} />;
 
     // Add more component cases as needed
   case 'currency':

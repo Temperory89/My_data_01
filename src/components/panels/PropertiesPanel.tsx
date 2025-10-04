@@ -597,6 +597,174 @@ export const PropertiesPanel: React.FC = () => {
           </div>
         );
 
+      case 'chart':
+        return (
+          <div className="space-y-4">
+            {renderSection('Data', 'data', (
+              <div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-white mb-2">
+                    Chart Type
+                  </label>
+                  <select
+                    value={props.chartType || 'column'}
+                    onChange={(e) => handlePropertyChange('chartType', e.target.value)}
+                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white text-sm focus:outline-none focus:border-blue-500"
+                  >
+                    <option value="column">Column chart</option>
+                    <option value="bar">Bar chart</option>
+                    <option value="line">Line chart</option>
+                    <option value="area">Area chart</option>
+                    <option value="pie">Pie chart</option>
+                    <option value="custom">Custom EChart</option>
+                  </select>
+                </div>
+
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-white mb-2">Chart series</label>
+                  {(props.series || []).map((series: any, index: number) => (
+                    <div key={index} className="mb-3 p-3 bg-gray-700 rounded-lg border border-gray-600">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-medium text-white">Series {index + 1}</span>
+                        <button
+                          onClick={() => {
+                            const newSeries = [...(props.series || [])];
+                            newSeries.splice(index, 1);
+                            handlePropertyChange('series', newSeries);
+                          }}
+                          className="text-red-400 hover:text-red-300"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+
+                      <div className="space-y-2">
+                        <input
+                          type="text"
+                          value={series.title || ''}
+                          onChange={(e) => {
+                            const newSeries = [...(props.series || [])];
+                            newSeries[index] = { ...series, title: e.target.value };
+                            handlePropertyChange('series', newSeries);
+                          }}
+                          placeholder="Series title"
+                          className="w-full px-2 py-1 bg-gray-600 border border-gray-500 rounded text-white text-sm focus:outline-none focus:border-blue-500"
+                        />
+
+                        <div className="flex gap-2">
+                          <label className="flex items-center gap-1 text-xs text-gray-300">
+                            Color:
+                            <input
+                              type="color"
+                              value={series.color || '#3b82f6'}
+                              onChange={(e) => {
+                                const newSeries = [...(props.series || [])];
+                                newSeries[index] = { ...series, color: e.target.value };
+                                handlePropertyChange('series', newSeries);
+                              }}
+                              className="w-8 h-6 border border-gray-500 rounded cursor-pointer bg-gray-600"
+                            />
+                          </label>
+                          <label className="flex items-center gap-1 text-xs text-gray-300">
+                            <input
+                              type="checkbox"
+                              checked={true}
+                              className="rounded border-gray-500"
+                            />
+                            Full color picker
+                          </label>
+                        </div>
+
+                        <div>
+                          <label className="block text-xs text-gray-300 mb-1">
+                            Series data
+                            <span className="ml-1 px-1 py-0.5 bg-blue-600 text-xs rounded">JS</span>
+                          </label>
+                          <textarea
+                            value={series.data || ''}
+                            onChange={(e) => {
+                              const newSeries = [...(props.series || [])];
+                              newSeries[index] = { ...series, data: e.target.value };
+                              handlePropertyChange('series', newSeries);
+                            }}
+                            placeholder="{{Total_assets.data.map(item => ({ x: item.c, y: item.total_clausetype }))}}"
+                            rows={3}
+                            className="w-full px-2 py-1 bg-gray-600 border border-gray-500 rounded text-white text-xs font-mono focus:outline-none focus:border-blue-500 resize-none"
+                          />
+                          <p className="text-xs text-gray-400 mt-1">
+                            Format: [{'{'}x: "label", y: value{'}'}] or bind API data
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+
+                  <button
+                    onClick={() => {
+                      const newSeries = [...(props.series || []), { title: 'Series', color: '#3b82f6', data: '[]' }];
+                      handlePropertyChange('series', newSeries);
+                    }}
+                    className="flex items-center gap-1 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm transition-colors w-full justify-center"
+                  >
+                    <Plus className="w-4 h-4" />
+                    Add series
+                  </button>
+                </div>
+              </div>
+            ))}
+
+            {renderSection('General', 'general', (
+              <div>
+                {renderPropertyEditor('title', 'Title', 'text', props.title)}
+                {renderPropertyEditor('visible', 'Visible', 'boolean', props.visible)}
+                {renderPropertyEditor('xAxisName', 'X-Axis Name', 'text', props.xAxisName)}
+                {renderPropertyEditor('yAxisName', 'Y-Axis Name', 'text', props.yAxisName)}
+                {renderPropertyEditor('showDataLabels', 'Show Data Labels', 'boolean', props.showDataLabels)}
+                {renderPropertyEditor('showLegend', 'Show Legend', 'boolean', props.showLegend)}
+                {renderPropertyEditor('legendPosition', 'Legend Position', 'select', props.legendPosition, ['top', 'bottom', 'left', 'right'])}
+                {renderPropertyEditor('enableTooltip', 'Enable Tooltip', 'boolean', props.enableTooltip)}
+              </div>
+            ))}
+
+            {renderSection('Style', 'style', (
+              <div>
+                {renderPropertyEditor('labelOrientation', 'Label Orientation', 'select', props.labelOrientation, ['auto', 'horizontal', 'vertical', 'slant'])}
+                {renderPropertyEditor('labelTextSize', 'Label Text Size', 'number', props.labelTextSize)}
+                {renderColorPicker('Grid Line Color', props.gridLineColor || '#e5e7eb', (value) => handlePropertyChange('gridLineColor', value))}
+                {renderColorPicker('Background Color', props.backgroundColor || '#ffffff', (value) => handlePropertyChange('backgroundColor', value))}
+                {renderColorPicker('Border Color', props.borderColor || '#e5e7eb', (value) => handlePropertyChange('borderColor', value))}
+                {renderPropertyEditor('borderWidth', 'Border Width', 'number', props.borderWidth)}
+                {renderPropertyEditor('borderRadius', 'Border Radius', 'number', props.borderRadius)}
+              </div>
+            ))}
+
+            {props.chartType === 'custom' && renderSection('Custom Configuration', 'custom', (
+              <div>
+                <CodeEditor
+                  value={props.customEChartsConfig || ''}
+                  onChange={(value) => handlePropertyChange('customEChartsConfig', value)}
+                  language="javascript"
+                  height={300}
+                  label="ECharts Configuration"
+                  placeholder={`{
+  xAxis: {
+    type: 'category',
+    data: ['Mon', 'Tue', 'Wed']
+  },
+  yAxis: {
+    type: 'value'
+  },
+  series: [{
+    data: {{Query1.data}},
+    type: 'line'
+  }]
+}`}
+                />
+              </div>
+            ))}
+          </div>
+        );
+
       default:
         return (
           <div className="text-center py-8 text-gray-400">

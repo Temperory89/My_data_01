@@ -417,3 +417,35 @@ export interface AppSettings {
   animations: boolean;
   debugMode: boolean;
 }
+
+export interface ChartSeries {
+  title: string;
+  color: string;
+  data: string;
+}
+
+export interface ChartProps {
+  title: string;
+  chartType: 'line' | 'bar' | 'pie' | 'column' | 'area' | 'custom';
+  chartData?: string;
+  series: ChartSeries[];
+  xAxisName: string;
+  yAxisName: string;
+  visible: boolean;
+  animateLoading: boolean;
+  allowScroll: boolean;
+  showDataLabels: boolean;
+  showLegend: boolean;
+  legendPosition: 'top' | 'bottom' | 'left' | 'right';
+  backgroundColor: string;
+  borderColor: string;
+  borderWidth: number;
+  borderRadius: number;
+  customEChartsConfig?: string;
+  customFusionChartsConfig?: string;
+  labelOrientation: 'auto' | 'horizontal' | 'vertical' | 'slant';
+  labelTextSize: number;
+  gridLineColor: string;
+  enableTooltip: boolean;
+  onDataPointClick?: string;
+}

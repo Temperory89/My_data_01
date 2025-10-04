@@ -279,5 +279,63 @@ export const componentDefinitions: ComponentDefinition[] = [
       { key: 'backgroundColor', label: 'Background Color', type: 'color', section: 'Style' },
       { key: 'visible', label: 'Visible', type: 'boolean', section: 'General', defaultValue: true }
     ]
+  },
+  {
+    type: 'chart',
+    name: 'Chart',
+    icon: 'BarChart3',
+    category: 'display',
+    defaultProps: {
+      title: 'Sales Report',
+      chartType: 'column',
+      series: [
+        {
+          title: '2023',
+          color: '#3b82f6',
+          data: '[{"x":"Product1","y":20000},{"x":"Product2","y":15000},{"x":"Product3","y":30000}]'
+        }
+      ],
+      xAxisName: 'Products',
+      yAxisName: 'Sales',
+      visible: true,
+      animateLoading: false,
+      allowScroll: false,
+      showDataLabels: true,
+      showLegend: true,
+      legendPosition: 'bottom',
+      backgroundColor: '#ffffff',
+      borderColor: '#e5e7eb',
+      borderWidth: 1,
+      borderRadius: 8,
+      labelOrientation: 'auto',
+      labelTextSize: 12,
+      gridLineColor: '#e5e7eb',
+      enableTooltip: true
+    },
+    defaultStyle: {
+      backgroundColor: '#ffffff',
+      borderColor: '#e5e7eb',
+      borderWidth: 1,
+      borderRadius: 8
+    },
+    defaultSize: { width: 600, height: 400 },
+    propertySchema: [
+      { key: 'title', label: 'Title', type: 'text', section: 'General' },
+      { key: 'chartType', label: 'Chart Type', type: 'select', section: 'General', options: ['column', 'bar', 'line', 'area', 'pie', 'custom'] },
+      { key: 'visible', label: 'Visible', type: 'boolean', section: 'General', defaultValue: true },
+      { key: 'xAxisName', label: 'X-Axis Name', type: 'text', section: 'General' },
+      { key: 'yAxisName', label: 'Y-Axis Name', type: 'text', section: 'General' },
+      { key: 'showDataLabels', label: 'Show Data Labels', type: 'boolean', section: 'General', defaultValue: true },
+      { key: 'showLegend', label: 'Show Legend', type: 'boolean', section: 'General', defaultValue: true },
+      { key: 'legendPosition', label: 'Legend Position', type: 'select', section: 'General', options: ['top', 'bottom', 'left', 'right'] },
+      { key: 'enableTooltip', label: 'Enable Tooltip', type: 'boolean', section: 'General', defaultValue: true },
+      { key: 'labelOrientation', label: 'Label Orientation', type: 'select', section: 'Style', options: ['auto', 'horizontal', 'vertical', 'slant'] },
+      { key: 'labelTextSize', label: 'Label Text Size', type: 'number', section: 'Style', defaultValue: 12 },
+      { key: 'gridLineColor', label: 'Grid Line Color', type: 'color', section: 'Style' },
+      { key: 'backgroundColor', label: 'Background Color', type: 'color', section: 'Style' },
+      { key: 'borderColor', label: 'Border Color', type: 'color', section: 'Style' },
+      { key: 'borderWidth', label: 'Border Width', type: 'number', section: 'Style', defaultValue: 1 },
+      { key: 'borderRadius', label: 'Border Radius', type: 'number', section: 'Style', defaultValue: 8 }
+    ]
   }
 ];
